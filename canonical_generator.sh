@@ -66,14 +66,14 @@ canonCpp()
 	echo "#include <iostream>" >> $1
 	echo "#include \"$2.hpp\"" >> $1
 	echo "" >> $1
-	echo "$2::$2(void) {" >> $1
+	echo "$2::$2() {" >> $1
 	echo "}" >> $1
 	echo "" >> $1
 	echo "$2::$2($2 const & src) {" >> $1
 	echo "	*this = src;" >> $1
 	echo "}" >> $1
 	echo "" >> $1
-	echo "$2::~$2(void) {" >> $1
+	echo "$2::~$2() {" >> $1
 	echo "}" >> $1
 	echo "" >> $1
 	echo "$2 &	$2::operator=($2 const & rhs) {" >> $1
