@@ -61,6 +61,44 @@ mainCpp()
 	echo "}" >> srcs/main.cpp
 }
 
+makeCpp()
+{	
+	echo "NAME =" >> Makefile
+	echo "" >> Makefile
+	echo "CC++ = c++" >> Makefile
+	echo "" >> Makefile
+	echo "C++FLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -I" >> Makefile
+	echo "" >> Makefile
+	echo "SRCS =" >> Makefile
+	echo "" >> Makefile
+	echo "INCS =" >> Makefile
+	echo "" >> Makefile
+	echo "OBJS = \$(addprefix srcs/, \$(SRCS:.cpp=.o))" >> Makefile
+	echo "" >> Makefile
+	echo "DEPS= \$(OBJS:%.o=%.d)" >> Makefile
+	echo "" >> Makefile
+	echo "-include \$(DEPS)" >> Makefile
+	echo "" >> Makefile
+	echo "all:		\$(NAME)" >> Makefile
+	echo "" >> Makefile
+	echo "\$(NAME):	\$(OBJS) \$(INCS)" >> Makefile
+	echo "			\$(CC++) \$(C++FLAGS) \$(INCS) -o \$(NAME) \$(OBJS)" >> Makefile
+	echo "" >> Makefile
+	echo ".cpp.o:" >> Makefile
+	echo "			\$(CC++) \$(C++FLAGS) \$(INCS) -c \$< -o \${<:.cpp=.o}" >> Makefile
+	echo "" >> Makefile
+	echo "clean:" >> Makefile
+	echo "			@rm -f \$(OBJS)" >> Makefile
+	echo "			@rm -f \$(DEPS)" >> Makefile
+	echo "" >> Makefile
+	echo "fclean:		clean" >> Makefile
+	echo "			@rm -f \$(NAME)" >> Makefile
+	echo "" >> Makefile
+	echo "re:			fclean all" >> Makefile
+	echo "" >> Makefile
+	echo ".PHONY:		all clean fclean re" >> Makefile
+}
+
 canonCpp()
 {
 	echo "#include <iostream>" >> $1
@@ -105,6 +143,7 @@ if [ -z "$1" ]; then
 	echo "Usage : ./generator [-noclass] <name>"
 elif [ "$1" == "Makefile" ]; then
 	write "Makefile" "Makefile"
+	makeCpp
 elif [ "$1" == "main" ];then
 	write "srcs/$1.cpp" "$1.cpp"
 	mainCpp
