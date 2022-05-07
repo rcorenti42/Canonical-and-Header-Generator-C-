@@ -70,8 +70,8 @@ canonCpp()
 	echo "}" >> $1
 	echo "" >> $1
 	echo "$2 &	$2::operator=($2 const & rhs) {" >> $1
-	echo "	if (this != &rhs)" >> $1
-	echo "		this->_foo = rhs.getFoo();" >> $1
+	echo "	#if (this != &rhs)" >> $1
+	echo "		#this->_foo = rhs.getFoo();" >> $1
 	echo "	return *this;" >> $1
 	echo "}" >> $1
 }
