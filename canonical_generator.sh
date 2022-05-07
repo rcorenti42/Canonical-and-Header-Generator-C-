@@ -54,6 +54,13 @@ write()
 	echo "" >> $1
 }
 
+mainCpp()
+{
+	echo "int	main() {" >> srcs/main.cpp
+	echo "	return 0;" >> srcs/main.cpp
+	echo "}" >> srcs/main.cpp
+}
+
 canonCpp()
 {
 	echo "#include <iostream>" >> $1
@@ -98,6 +105,9 @@ if [ -z "$1" ]; then
 	echo "Usage : ./generator [-noclass] <name>"
 elif [ "$1" == "Makefile" ]; then
 	write "Makefile" "Makefile"
+elif [ "$1" == "main" ];then
+	write "srcs/$1.cpp" "$1.cpp"
+	mainCpp
 elif [ "$1" == "-noclass" ]; then
 	write $2 $2
 else
