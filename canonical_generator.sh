@@ -63,21 +63,16 @@ canonCpp()
 	echo "}" >> $1
 	echo "" >> $1
 	echo "$2::$2($2 const & src) {" >> $1
-	echo "        *this = src;" >> $1
-	echo "        return ;" >> $1
+	echo "	*this = src;" >> $1
 	echo "}" >> $1
 	echo "" >> $1
 	echo "$2::~$2(void) {" >> $1
 	echo "}" >> $1
 	echo "" >> $1
-	echo "int     $2::getFoo(void) const {" >> $1
-	echo "        return this->_foo;" >> $1
-	echo "}" >> $1
-	echo "" >> $1
-	echo "$2 &  $2::operator=($2 const & rhs) {" >> $1
-	echo "        if (this != &rhs)" >> $1
-	echo "                this->_foo = rhs.getFoo();" >> $1
-	echo "        return *this;" >> $1
+	echo "$2 &	$2::operator=($2 const & rhs) {" >> $1
+	echo "	if (this != &rhs)" >> $1
+	echo "		this->_foo = rhs.getFoo();" >> $1
+	echo "	return *this;" >> $1
 	echo "}" >> $1
 }
 
@@ -89,14 +84,11 @@ canonHpp()
 	echo "# include <iostream>" >> $1
 	echo "" >> $1
 	echo "class $2 {" >> $1
-	echo "public:" >> $1
-	echo "        $2(void);" >> $1
-	echo "        $2($2 const & src);" >> $1
-	echo "        ~$2(void);" >> $1
-	echo "        $2 &  operator=($2 const & rhs);" >> $1
-	echo "        int     getFoo(void) const;" >> $1
-	echo "private:" >> $1
-	echo "        int     _foo;" >> $1
+	echo "	public:" >> $1
+	echo "		$2();" >> $1
+	echo "		$2($2 const &);" >> $1
+	echo "		~$2();" >> $1
+	echo "		$2 &	operator=($2 const &);" >> $1
 	echo "};" >> $1
 	echo "" >> $1
 	echo "#endif" >> $1
