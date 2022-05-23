@@ -77,9 +77,9 @@ makeCpp()
 	echo "" >> Makefile
 	echo "DEPS= \$(OBJS:%.o=%.d)" >> Makefile
 	echo "" >> Makefile
-	echo "-include \$(DEPS)" >> Makefile
-	echo "" >> Makefile
 	echo "all:		\$(NAME)" >> Makefile
+	echo "" >> Makefile
+	echo "-include \$(DEPS)" >> Makefile
 	echo "" >> Makefile
 	echo "\$(NAME):	\$(OBJS) \$(INCS)" >> Makefile
 	echo "			\$(CC++) \$(C++FLAGS) \$(INCS) -o \$(NAME) \$(OBJS)" >> Makefile
@@ -101,7 +101,6 @@ makeCpp()
 
 canonCpp()
 {
-	echo "#include <iostream>" >> $1
 	echo "#include \"$2.hpp\"" >> $1
 	echo "" >> $1
 	echo "$2::$2() {" >> $1
@@ -147,6 +146,18 @@ elif [ "$1" == "Makefile" ]; then
 elif [ "$1" == "main" ];then
 	write "srcs/$1.cpp" "$1.cpp"
 	mainCpp
+elif [ "$1" == "-header" ]; then
+	if [ "$2" == "Makefile" ]; then
+		mv Makefile tmp
+		write "Makefile" "Makefile"
+		cat tmp >> Makefile
+		rm tmp
+	else
+		mv $2 tmp
+		write $2 $2
+		cat tmp >> $2
+		rm tmp
+	fi
 elif [ "$1" == "-noclass" ]; then
 	write $2 $2
 else
